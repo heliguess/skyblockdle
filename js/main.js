@@ -18,20 +18,27 @@ function getTodayString() {
     
     const today = getTodayString();
     const lastPlayed = localStorage.getItem("skyblockdle_last_played");
-    localStorage.removeItem("skyblockdle_last_played");
 
     if(lastPlayed !== today){
         localStorage.removeItem("skyblockdle_guesses");
         localStorage.removeItem("skyblockdle_shareRows");
     }
 
+    function disableInputs() {
+        const gi = document.getElementById("guessInput");
+        const gb = document.getElementById("guessBtn");
+        const al = document.getElementById("alert");
+        if (gi) gi.disabled = true;
+        if (gb) gb.disabled = true;
+        if (al) al.innerHTML = "Come back tomorrow!";
+    }
+
     if (lastPlayed === today) {
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("guessInput").disabled = true;
-            document.getElementById("guessBtn").disabled = true;
-            document.getElementById("alert").innerHTML = "Come back tomorrow!";
-            
-        });
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", disableInputs);
+        } else {
+            disableInputs();
+        }
     }
 })();
 
@@ -102,6 +109,11 @@ if (savedGuesses.length > 0) {
             } else{
                 guessedItems.push(foundItem)
                 localStorage.setItem("skyblockdle_guesses", JSON.stringify(guessedItems.map(i => i.name)));
+
+                if (!localStorage.getItem("skyblockdle_last_played")) {
+                    localStorage.setItem("skyblockdle_last_played", getTodayString());
+                }
+                
                 alertBox.innerHTML = "&nbsp;"
                 document.getElementById("guessInput").value = "";
                 addGrid(itemData);
