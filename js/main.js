@@ -285,9 +285,9 @@ if (savedGuesses.length > 0) {
             const day = getDayNumber();
             let text = "";
             if(attempts <= 1){
-                text = `\nSkyblockdle #${day} first try!\n`+shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
+                text = `Skyblockdle #${day} first try!\n`+shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
             } else {
-                text = `\nSkyblockdle #${day} in ${attempts} tries\n` +shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
+                text = `Skyblockdle #${day} in ${attempts} tries\n` +shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
             }
 
             navigator.clipboard.writeText(text).then(() => {
