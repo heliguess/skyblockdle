@@ -87,6 +87,8 @@ fetch("js/weaponsList.json")
 
 const savedGuesses = JSON.parse(localStorage.getItem("skyblockdle_guesses") || "[]");
 shareRows = JSON.parse(localStorage.getItem("skyblockdle_shareRows") || "[]");
+const restoredLastPlayed = localStorage.getItem("skyblockdle_last_played");
+
 if (savedGuesses.length > 0) {
     savedGuesses.forEach(name => {
         const foundItem = itemsGiven.find(e => e.name === name);
