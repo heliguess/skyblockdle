@@ -77,20 +77,19 @@ fetch("js/weaponsList.json")
         }).join("");
     }
 
-    const savedGuesses = JSON.parse(localStorage.getItem("skyblockdle_guesses") || "[]");
-    const savedShareRows = JSON.parse(localStorage.getItem("skyblockdle_shareRows") || "[]");
+const savedGuesses = JSON.parse(localStorage.getItem("skyblockdle_guesses") || "[]");
+if (savedGuesses.length > 0) {
+    savedGuesses.forEach(name => {
+        const foundItem = itemsGiven.find(e => e.name === name);
+        if (foundItem) {
+            guessedItems.push(foundItem);
+            addGrid([foundItem.name, foundItem.id, foundItem.damage, foundItem.strength, foundItem.rarity, foundItem.weapon_type, foundItem.ability], true);
+        }
+    });
 
-    if (savedGuesses.length > 0) {
-        savedGuesses.forEach(name => {
-            const foundItem = itemsGiven.find(e => e.name === name);
-            if (foundItem) {
-                guessedItems.push(foundItem);
-                addGrid([foundItem.name, foundItem.id, foundItem.damage, foundItem.strength, foundItem.rarity, foundItem.weapon_type, foundItem.ability]);
-            }
-        });
-        shareRows = savedShareRows;
-        showShareButton(guessedItems.length);
-    }
+    shareRows = JSON.parse(localStorage.getItem("skyblockdle_shareRows") || "[]");
+    showShareButton(guessedItems.length);
+}
 
     async function checkAnswer(){
         let guess = document.getElementById("guessInput").value
@@ -214,7 +213,7 @@ fetch("js/weaponsList.json")
         }
     });
 
-    function addGrid(itemData) {
+    function addGrid(itemData, isRestore = false) {
         let rowResults = [];
         itemData.forEach((element, index) => {
             const cell = document.createElement('div');
@@ -245,8 +244,10 @@ fetch("js/weaponsList.json")
             grid.appendChild(cell);
 
         });
-        shareRows.push(buildShareRow(rowResults));
-        localStorage.setItem("skyblockdle_shareRows", JSON.stringify(shareRows));
+        if(isRestore) {
+            shareRows.push(buildShareRow(rowResults));
+            localStorage.setItem("skyblockdle_shareRows", JSON.stringify(shareRows));
+        }
     }
 
     function checkBg(cell, index, itemData, itemAns){
