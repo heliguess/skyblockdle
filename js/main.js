@@ -22,6 +22,7 @@ function getTodayString() {
     if(lastPlayed !== today){
         localStorage.removeItem("skyblockdle_guesses");
         localStorage.removeItem("skyblockdle_shareRows");
+        localStorage.removeItem("skyblockdle_last_played");
     }
 
     function disableInputs() {
@@ -110,9 +111,6 @@ if (savedGuesses.length > 0) {
                 guessedItems.push(foundItem)
                 localStorage.setItem("skyblockdle_guesses", JSON.stringify(guessedItems.map(i => i.name)));
 
-                if (!localStorage.getItem("skyblockdle_last_played")) {
-                    localStorage.setItem("skyblockdle_last_played", getTodayString());
-                }
 
                 alertBox.innerHTML = "&nbsp;"
                 document.getElementById("guessInput").value = "";
@@ -287,9 +285,9 @@ if (savedGuesses.length > 0) {
             const day = getDayNumber();
             let text = "";
             if(attempts <= 1){
-                text = `\nSkyblockdle #${day} first try!`+shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
+                text = `\nSkyblockdle #${day} first try!\n`+shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
             } else {
-                text = `\nSkyblockdle #${day} in ${attempts} tries` +shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
+                text = `\nSkyblockdle #${day} in ${attempts} tries\n` +shareRows.join("\n") + "\n<https://skyblockle.vercel.app/>"
             }
 
             navigator.clipboard.writeText(text).then(() => {

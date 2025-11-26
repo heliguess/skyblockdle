@@ -14,7 +14,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 .obf, .arrow{
   font-family: "Monocraft";
@@ -217,6 +217,7 @@ ul{
 
 #openPop{
   margin-top: 80px;
+  margin-bottom: 80px;
   text-align: center;
   justify-content: center;
   align-items: center;
