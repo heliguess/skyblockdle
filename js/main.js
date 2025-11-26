@@ -96,7 +96,9 @@ if (savedGuesses.length > 0) {
         }
     });
 
+    if (restoredLastPlayed === getTodayString()) {
     showShareButton(guessedItems.length);
+    }
 }
 
     async function checkAnswer(){

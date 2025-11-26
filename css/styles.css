@@ -122,7 +122,6 @@ ul{
   align-items: center;
   font-size: 20px;
   text-align: center;
-  image-rendering: crisp-edges
 }
 
 .container {
@@ -175,7 +174,19 @@ ul{
 }
 
 .cell img {
-  filter: drop-shadow(0 0 5px rgb(49, 49, 49))
+  filter: drop-shadow(0 0 5px rgb(49, 49, 49));
+
+  image-rendering: optimizeSpeed;             /* older name */
+  image-rendering: -moz-crisp-edges;          /* Firefox */
+  image-rendering: -o-crisp-edges;            /* Opera */
+  image-rendering: -webkit-optimize-contrast; /* Older Safari */
+  image-rendering: pixelated;                 /* Chrome, modern browsers */
+  image-rendering: crisp-edges;               /* CSS4 draft */
+  -ms-interpolation-mode: nearest-neighbor;   /* IE (non-standard) */
+
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 #dmg,
