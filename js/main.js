@@ -15,15 +15,17 @@ function getTodayString() {
 }
 
 (function applyDailyLockout() {
+    
     const today = getTodayString();
     const lastPlayed = localStorage.getItem("skyblockdle_last_played");
-
     if (lastPlayed === today) {
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("guessInput").disabled = true;
             document.getElementById("guessBtn").disabled = true;
             document.getElementById("alert").innerHTML = "Come back tomorrow!";
         });
+    } else {
+        localStorage.removeItem("skyblockdle_last_played");
     }
 })();
 fetch("js/weaponsList.json")
@@ -67,6 +69,18 @@ fetch("js/weaponsList.json")
         }).join("");
     }
 
+    const savedGuesses = JSON.parse(localStorage.getItem("skyblockdle_guesses") || "[]");
+
+    if (savedGuesses.length > 0) {
+        savedGuesses.forEach(name => {
+            const foundItem = itemsGiven.find(e => e.name === name);
+            if (foundItem) {
+                guessedItems.push(foundItem);
+                addGrid([foundItem.name, foundItem.id, foundItem.damage, foundItem.strength, foundItem.rarity, foundItem.weapon_type, foundItem.ability]);
+            }
+        });
+    }
+
     async function checkAnswer(){
         let guess = document.getElementById("guessInput").value
         let foundItem = itemsGiven.find(e => e.name.toLowerCase() === guess.toLowerCase());
@@ -77,6 +91,7 @@ fetch("js/weaponsList.json")
                 return;
             } else{
                 guessedItems.push(foundItem)
+                localStorage.setItem("skyblockdle_guesses", JSON.stringify(guessedItems.map(i => i.name)));
                 alertBox.innerHTML = "&nbsp;"
                 document.getElementById("guessInput").value = "";
                 addGrid(itemData);
