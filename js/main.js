@@ -78,6 +78,7 @@ fetch("js/weaponsList.json")
     }
 
 const savedGuesses = JSON.parse(localStorage.getItem("skyblockdle_guesses") || "[]");
+shareRows = JSON.parse(localStorage.getItem("skyblockdle_shareRows") || "[]");
 if (savedGuesses.length > 0) {
     savedGuesses.forEach(name => {
         const foundItem = itemsGiven.find(e => e.name === name);
@@ -87,7 +88,6 @@ if (savedGuesses.length > 0) {
         }
     });
 
-    shareRows = JSON.parse(localStorage.getItem("skyblockdle_shareRows") || "[]");
     showShareButton(guessedItems.length);
 }
 
@@ -244,7 +244,7 @@ if (savedGuesses.length > 0) {
             grid.appendChild(cell);
 
         });
-        if(isRestore) {
+        if(!isRestore) {
             shareRows.push(buildShareRow(rowResults));
             localStorage.setItem("skyblockdle_shareRows", JSON.stringify(shareRows));
         }
