@@ -172,6 +172,10 @@ if (savedGuesses.length > 0) {
             tempMessage("Moo! 🐮")
             return;
         }
+        if(guess.toLowerCase() == "furrybutts"){
+            tempMessage("cute")
+            return;
+        }
         if(foundItem){
             let itemData = [foundItem.name, foundItem.id, foundItem.damage, foundItem.strength, foundItem.rarity, foundItem.weapon_type, foundItem.ability];
             if(guessedItems.includes(foundItem)){
