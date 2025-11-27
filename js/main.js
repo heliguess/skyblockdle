@@ -193,28 +193,34 @@ if (savedGuesses.length > 0) {
 
             if(foundItem.name === itemAns.name){
                 if (!practiceActive) {
-                alertBox.innerHTML = "You won!"
-                alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
-                document.getElementById("guessInput").value = "";
-                document.getElementById("guessBtn").disabled = true;
-                document.getElementById("guessInput").disabled = true;
-                document.getElementById("guessInput").placeholder = "Yay!";
-
-                localStorage.setItem("skyblockdle_last_played", getTodayString());
-
-                showShareButton(guessedItems.length);
-                
-                const pb = document.getElementById("practiceBtn");
-                pb.style.display = "inline-block";
-                pb.onclick = () => {
-                    console.log("Loading practice mode");
-                    loadPracticeGame(itemsGiven);
-                };
+                    localStorage.setItem("skyblockdle_last_played", getTodayString());
+                    document.getElementById("guessInput").value = "";
+                    document.getElementById("guessBtn").disabled = true;
+                    document.getElementById("guessInput").disabled = true;
+                    setTimeout(() => {
+                        alertBox.innerHTML = "You won!"
+                        alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
+                        document.getElementById("guessInput").placeholder = "Yay!";
+        
+                        showShareButton(guessedItems.length);
+                        
+                        const pb = document.getElementById("practiceBtn");
+                        pb.style.display = "inline-block";
+                    }, 300*6);
+                    pb.onclick = () => {
+                        console.log("Loading practice mode");
+                        loadPracticeGame(itemsGiven);
+                    };
                 } else{
-                    alertBox.innerHTML = "Good job!";
-                    alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
-                    const pb = document.getElementById("practiceBtn");
-                    pb.style.display = "inline-block";
+                    document.getElementById("guessInput").value = "";
+                    document.getElementById("guessBtn").disabled = true;
+                    document.getElementById("guessInput").disabled = true;
+                    setTimeout(() => {
+                        alertBox.innerHTML = "Good job!";
+                        alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
+                        const pb = document.getElementById("practiceBtn");
+                        pb.style.display = "inline-block";
+                    }, 300*6);
                     pb.onclick = () => {
                         console.log("Loading practice mode");
                         loadPracticeGame(itemsGiven);
