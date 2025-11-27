@@ -362,6 +362,7 @@ a{
     width: auto;
     font-size: 8px;
     border-radius: 5px;
+    min-width: 80%;
   }
 
    .cell.title::before {
