@@ -7,6 +7,12 @@
   src: url("../font/Monocraft-SemiBold.otf");
 }
 
+*{
+  -webkit-font-smoothing: none; /* Chrome, Safari, Opera */
+  -moz-osx-font-smoothing: unset; /* Firefox */
+  font-smooth: never;
+}
+
 body {
   margin: 0;
   font-family: "Minecraft";
