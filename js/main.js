@@ -322,13 +322,11 @@ if (savedGuesses.length > 0) {
     });
 
     function addGrid(itemData, isRestore = false) {
-        const ROW_STAGGER_MS = 0;   // delay between rows
-        const CELL_OFFSET_MS = 300;    // small offset per cell inside a row
+        const ROW_STAGGER_MS = 0;
+        const CELL_OFFSET_MS = 300;
         const DURATION_MS = 300;
 
-        // number of title columns (used to compute rows)
         const cols = Math.max(grid.querySelectorAll(".cell.title").length, 1);
-        // existing non-title cells -> existing rows
         const existingCells = grid.querySelectorAll(".cell:not(.title)").length;
         let existingRows = Math.floor(existingCells / cols);
         let rowResults = [];
@@ -362,7 +360,6 @@ if (savedGuesses.length > 0) {
             
             if (!cell.classList.contains('title')) {
                 if (isRestore) {
-                    // restored rows appear instantly
                     cell.style.animation = 'none';
                     cell.style.opacity = '1';
                     cell.style.transform = 'none';
