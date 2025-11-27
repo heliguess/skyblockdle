@@ -25,6 +25,8 @@ ul{
 }
 
 .bg-blur {
+  --darkreader-inline-bgcolor: transparent !important;
+  --darkreader-inline-bgimage: initial !important;
   position: fixed;
   inset: -20px;
   z-index: -1;
