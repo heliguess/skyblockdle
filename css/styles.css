@@ -8,7 +8,7 @@
 }
 
 *{
-  -webkit-font-smoothing: none; /* Chrome, Safari, Opera */
+  -webkit-font-smoothing: subpixel-antialiased; /* Chrome, Safari, Opera */
   -moz-osx-font-smoothing: unset; /* Firefox */
   font-smooth: never;
 }
