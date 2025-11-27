@@ -245,6 +245,12 @@ if (savedGuesses.length > 0) {
 
         const matches = itemsGiven
             .filter(item => item.name.toLowerCase().includes(value))
+            .sort((a, b) => {
+                const ai = a.name.toLowerCase().indexOf(value);
+                const bi = b.name.toLowerCase().indexOf(value);
+                if (ai !== bi) return ai - bi;
+                return a.name.length - b.name.length;
+            })
             .slice(0, 10);
 
         if (matches.length === 0) {
@@ -316,7 +322,17 @@ if (savedGuesses.length > 0) {
     });
 
     function addGrid(itemData, isRestore = false) {
+        const ROW_STAGGER_MS = 0;   // delay between rows
+        const CELL_OFFSET_MS = 300;    // small offset per cell inside a row
+        const DURATION_MS = 300;
+
+        // number of title columns (used to compute rows)
+        const cols = Math.max(grid.querySelectorAll(".cell.title").length, 1);
+        // existing non-title cells -> existing rows
+        const existingCells = grid.querySelectorAll(".cell:not(.title)").length;
+        let existingRows = Math.floor(existingCells / cols);
         let rowResults = [];
+        let displayIndex = 0;
         itemData.forEach((element, index) => {
             const cell = document.createElement('div');
             cell.className = "cell";
@@ -335,6 +351,7 @@ if (savedGuesses.length > 0) {
             }else if (element === itemData[0]){
                 cell.innerHTML = `<img src='img/${itemData[1].toLowerCase()}.png' alt='${itemData[0]}' title='${itemData[0]}' height='65'>`;
             }else if (element === itemData[1]){
+                //skip id
                 return;
             }else{
                 cell.innerHTML = element
@@ -342,16 +359,30 @@ if (savedGuesses.length > 0) {
 
             let result = checkBg(cell, index, element, ansData)
             if (index > 0) rowResults.push(result);
+            
+            if (!cell.classList.contains('title')) {
+                if (isRestore) {
+                    // restored rows appear instantly
+                    cell.style.animation = 'none';
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'none';
+                } else {
+                    const rowBaseDelay = existingRows * ROW_STAGGER_MS;
+                    const cellDelay = rowBaseDelay + (displayIndex * CELL_OFFSET_MS);
+                    cell.style.animation = `reveal ${DURATION_MS}ms ease ${cellDelay}ms both`;
+                }
+                displayIndex++;
+        }
 
             grid.appendChild(cell);
 
         });
-        if(!isRestore) {
-            shareRows.push(buildShareRow(rowResults));
-            if (!practiceActive) {
-                localStorage.setItem("skyblockdle_shareRows", JSON.stringify(shareRows));
-            };
+        if (!isRestore && rowResults.length > 0) {
+        shareRows.push(buildShareRow(rowResults));
+        if (!practiceActive) {
+            localStorage.setItem("skyblockdle_shareRows", JSON.stringify(shareRows));
         }
+    }
     }
 
     function checkBg(cell, index, itemData, itemAns){

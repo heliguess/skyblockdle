@@ -138,6 +138,21 @@ ul{
   align-items: center;
   font-size: 20px;
   text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: reveal 0.35s ease-out forwards;
+}
+
+.cell.title {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+}
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .container {
