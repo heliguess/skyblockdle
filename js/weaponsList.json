@@ -270,7 +270,7 @@
       "rarity": "RARE",
       "damage": 200,
       "strength": 70,
-      "ability": ["Passive"]
+      "ability": ["Right click"]
     },
     {
       "id": "SUPER_UNDEAD_BOW",
@@ -823,7 +823,7 @@
     },
     {
       "id": "SINSEEKER_SCYTHE",
-      "name": "§4Sin§5seeker Scythe",
+      "name": "Sinseeker Scythe",
       "weapon_type": "SWORD",
       "rarity": "EPIC",
       "damage": 100,
