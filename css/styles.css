@@ -429,14 +429,11 @@ input:checked + .slider:before {
 
 
 @media (max-width: 600px) {
-
-  body {
-    padding: 10px;
-    overflow-x: hidden;
-  }
+  :root { --hpad: 16px; --gap: 5px; }
 
   #container {
-    width: 100%;
+    padding: 0 var(--hpad);
+    box-sizing: border-box;
   }
 
   #maintitle img {
@@ -456,7 +453,8 @@ input:checked + .slider:before {
   }
 
   #guessInput {
-    width:auto;
+    width:100%;
+    max-width: 420px;
     font-size: 18px;
   }
 
@@ -473,40 +471,71 @@ input:checked + .slider:before {
     max-height: 160px;
   }
 
-  #grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    width: 100%;
-    overflow-x: hidden;
-    padding-bottom: 10px;
+  .switch-container {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 8px 0;
+    background: transparent;
+    padding: 0;
+    z-index: 3;
+    gap: 8px;
   }
 
-  .cell {
+  #grid {
+    width: 100%;
+    margin: 0 auto 14px;
+    gap: var(--gap);
+    grid-template-columns: repeat(6,minmax(0, calc((100vw - (2 * var(--hpad)) - (5 * var(--gap))) / 6)));
+    justify-items: center;
+    box-sizing: border-box;
+  }
+
+ .cell {
+    width: 100%;
+    font-size: clamp(9px, 2.5vw, 11px);
+    padding: 6px 4px;
     height: auto;
-    width: auto;
-    font-size: 12px;
+    min-height: 48px;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+   .cell.title {
+    height: 80%;
+    min-height: 40px;
+    font-size: clamp(9px, 2.5vw, 15px);
+    padding: 8px 6px;
+    border-radius: 6px;
+  }
+
+   .cell .imgCell {
+    font-size: clamp(9px, 2.6vw, 12px);
+    gap: 4px;
     padding: 4px;
   }
-
-  .cell.title {
-    height: 20px;
+  .cell .imgCell img {
+    height: 32px;
     width: auto;
-    font-size: 8px;
-    border-radius: 5px;
-    min-width: 80%;
+    display: block;
   }
 
-   .cell.title::before {
-    inset: 1px;
-    border-radius: 4px;
+  .cell .imgCell > div {
+    font-size: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  
+
   .cell img{
     height: 30px;
   }
-  
+
   .cell.title img {
-    height: 8px;
+    height: clamp(9px, 2.5vw, 11px);
   }
 
   .modal__window {
@@ -549,4 +578,23 @@ input:checked + .slider:before {
     text-shadow: 2px 2px 0px #3f1515;
   }
 
+    /* ensure suggestion box and inputs stay within container */
+  #guessInput { max-width: 100%; width: 100%; }
+  #suggestions { width: calc(100% - 2 * 8px); left: 50%; transform: translateX(-50%); max-width: 100%; }
+
+  /* switch flows above grid instead of overlapping */
+  .switch-container { position: static; margin-bottom: 6px; justify-content: flex-end; }
+
+  /* fallback: if columns become too narrow, reduce gap slightly */
+  #grid[style] { gap: 4px; }
+}
+
+@media (min-width: 1100px) {
+  #grid {
+    grid-template-columns: repeat(6, 180px);
+    width: fit-content;
+  }
+  .cell {
+    width: 180px;
+  }
 }
