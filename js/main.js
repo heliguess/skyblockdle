@@ -241,11 +241,11 @@ if (shouldRestore) {
                         alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
                         const pb = document.getElementById("practiceBtn");
                         pb.style.display = "inline-block";
-                    }, 300*6);
-                    pb.onclick = () => {
+                        pb.onclick = () => {
                         console.log("Loading practice mode");
                         loadPracticeGame(itemsGiven);
                     };
+                    }, 300*6);
                 }
             }
         }else{
