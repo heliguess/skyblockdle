@@ -11,8 +11,19 @@ let grid = document.getElementById('grid');
 grid.className = "grid";
 let alertBox = document.getElementById("alert");
 let practiceActive = false;
-
+const daggers = {
+    "T1 Blaze Daggers": ["Firedust Dagger", "Twilight Dagger"],
+    "T2 Blaze Daggers": ["Kindlebane Dagger", "Mawdredge Dagger"],
+    "T3 Blaze Daggers": ["Pyrochaos Dagger", "Deathripper Dagger"]
+};
 let hplus = document.getElementById("hpluscheck").checked;
+
+
+function pairOf(name) {
+    for (const dag in daggers)
+        if (daggers[dag].includes(name)) return dag;
+    return null;
+}
 
 function seededRandom(seed) {
     let x = Math.sin(seed) * 10000;
@@ -83,7 +94,12 @@ fetch("js/weaponsList.json")
 .then(data => {
     const itemsGiven = data.items;
     const index = getDailyIndex(itemsGiven.length);
-    itemAns = itemsGiven[index];
+    const groupName = pairOf(itemsGiven[index].name);
+    if (groupName) {
+        itemAns = { ...itemsGiven[index], name: groupName };
+    } else {
+        itemAns = itemsGiven[index];
+    }
     ansData = [itemAns.name, itemAns.id, itemAns.damage, itemAns.strength, itemAns.rarity, itemAns.weapon_type, itemAns.ability, itemAns.material];
     
     (function applyDailyLockout() {
@@ -193,7 +209,12 @@ if (shouldRestore) {
         }
         if(foundItem){
             let itemData = [foundItem.name, foundItem.id, foundItem.damage, foundItem.strength, foundItem.rarity, foundItem.weapon_type, foundItem.ability, foundItem.material];
-            if(guessedItems.includes(foundItem)){
+
+            const guessedNames = guessedItems.map(i => i.name)
+            const pairGroup = pairOf(foundItem.name)
+            const pairItems = pairGroup ? daggers[pairGroup] : [foundItem.name]
+            const alreadyGuessed = pairItems.some(name => guessedNames.includes(name))
+            if(alreadyGuessed){
                 tempMessage("You already tried that item!")
                 return;
             } else{
@@ -211,26 +232,26 @@ if (shouldRestore) {
 
             
 
-            if(foundItem.name === itemAns.name){
+            if(foundItem.name  === itemAns.name || pairOf(foundItem.name) === itemAns.name){
                 if (!practiceActive) {
                     localStorage.setItem("skyblockdle_last_played", getTodayString());
                     document.getElementById("guessInput").value = "";
                     document.getElementById("guessBtn").disabled = true;
                     document.getElementById("guessInput").disabled = true;
+                    const pb = document.getElementById("practiceBtn");
                     setTimeout(() => {
                         alertBox.innerHTML = "You won!"
                         alertBox.style = "color: #00AA00; text-shadow: 3px 3px 0px #004200ff;"
                         document.getElementById("guessInput").placeholder = "Yay!";
         
                         showShareButton(guessedItems.length);
-                        
-                        const pb = document.getElementById("practiceBtn");
                         pb.style.display = "inline-block";
-                    }, 300*6);
-                    pb.onclick = () => {
+                        pb.onclick = () => {
                         console.log("Loading practice mode");
                         loadPracticeGame(itemsGiven);
                     };
+                    }, 300*6);
+
                 } else{
                     document.getElementById("guessInput").value = "";
                     document.getElementById("guessBtn").disabled = true;
@@ -401,6 +422,10 @@ if (shouldRestore) {
                 }
             }else if (element === itemData[0]){
                 let parsedName = itemData[0];
+                const pair = pairOf(itemData[0]);
+                if (pair) {
+                    parsedName = pair;
+                }
                 if(element == "Aspect of the Jerry, Signature Edition"){
                     parsedName = "AOTJ, Signature Edition"
                 } else if (element == "§4Sin§5seeker Scythe"){
