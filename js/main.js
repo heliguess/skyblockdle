@@ -268,6 +268,10 @@ if (shouldRestore) {
                     };
                     }, 300*6);
                 }
+            } else {
+                setTimeout(() => {
+                    tempMessage("Not correct! Try again!");
+                }, 300*6);
             }
         }else{
             tempMessage("Item not found");
