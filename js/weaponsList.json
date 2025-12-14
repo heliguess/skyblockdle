@@ -279,7 +279,7 @@
       "rarity": "RARE",
       "damage": 200,
       "strength": 70,
-      "ability": ["Passive"],
+      "ability": ["Right click"],
       "material": "GOLD_SWORD"
     },
     {
