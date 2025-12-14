@@ -300,22 +300,36 @@ if (shouldRestore) {
             return;
         }
 
-        const matches = itemsGiven
-            .filter(item => item.name.toLowerCase().includes(value))
-            .sort((a, b) => {
-                const ai = a.name.toLowerCase().indexOf(value);
-                const bi = b.name.toLowerCase().indexOf(value);
-                if (ai !== bi) return ai - bi;
+        let allMatches = [];
+        
+        for (const pair in daggers) {
+            if (pair.toLowerCase().includes(value)) {
+                const kwMatchPos = pair.toLowerCase().indexOf(value);
+                daggers[pair].forEach(dagger => {
+                    allMatches.push({name: dagger, pos: kwMatchPos});
+                });
+            }
+        }
+        
+        itemsGiven.forEach(item => {
+            if (item.name.toLowerCase().includes(value)) {
+                if (!allMatches.some(m => m.name === item.name)) {
+                    allMatches.push({...item, pos: item.name.toLowerCase().indexOf(value)});
+                }
+            }
+        });
+        
+        const combinedMatches = allMatches.sort((a, b) => {
+                if (a.pos !== b.pos) return a.pos - b.pos;
                 return a.name.length - b.name.length;
-            })
-            .slice(0, 10);
+            }).slice(0, 10);
 
-        if (matches.length === 0) {
+        if (combinedMatches.length === 0) {
             suggestionsBox.style.display = "none";
             return;
         }
 
-        matches.forEach((item, i) => {
+        combinedMatches.forEach((item, i) => {
             const div = document.createElement("div");
             div.textContent = item.name;
             div.style.padding = "6px";
