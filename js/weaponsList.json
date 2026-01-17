@@ -1201,6 +1201,16 @@
       "strength": 0,
       "ability": ["Passive"],
       "material": "IRON_SWORD"
+    },
+    {
+      "id": "SPELLING_STICK",
+      "name": "Spelling Stick",
+      "weapon_type": "SWORD",
+      "rarity": "LEGENDARY",
+      "damage": 1,
+      "strength": 0,
+      "ability": ["Passive"],
+      "material": "STICK"
     }
   ]
 }

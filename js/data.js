@@ -10,7 +10,7 @@ export async function loadWeapons() {
 export function initDailyAnswer() {
     const items = GameState.items;
     const index = getDailyIndex(items.length);
-    const item = items[index];
+    const item = items[63];
 
     const group = pairOf(item.name);
     GameState.itemAns = group ? { ...item, name: group } : item;

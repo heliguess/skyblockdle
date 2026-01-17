@@ -311,6 +311,11 @@ ul{
   font-size: 20px;
 }
 
+ #giveUpBtn {
+  cursor: pointer;
+  text-decoration: underline;
+ }
+
 #info {
   visibility: hidden;
   position: fixed;

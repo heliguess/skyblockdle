@@ -148,6 +148,9 @@ export function abilityColor(foundArr, ansArr) {
 }
 
 export function buildShareRow(cellResults) {
+    if (GameState.gaveUp) {
+        return "🏳️".repeat(cellResults.length);
+    }
     return cellResults.map(res => {
         if (res.includes("higher")) return "⬆️";
         if (res.includes("lower")) return "⬇️";

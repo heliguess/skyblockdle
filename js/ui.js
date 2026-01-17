@@ -57,6 +57,7 @@ export function enableInput() {
     guessInput.placeholder = "Enter weapon";
 }
 
+
 export function showShareButton(attempts) {
     const btn = document.getElementById("shareBtn");
     btn.style.display = "inline-block";
@@ -64,7 +65,9 @@ export function showShareButton(attempts) {
     btn.onclick = () => {
         const day = getDayNumber();
         let text = "";
-        if (attempts <= 1) {
+        if (GameState.gaveUp){
+            text = `Skyblockle #${day}! Gave up after ${attempts} tries... \n${GameState.shareRows.join("\n")}\n<https://skyblockle.vercel.app/>`;
+        } else if (attempts <= 1) {
             text = `Skyblockle #${day} first try!\n${GameState.shareRows.join("\n")}\n<https://skyblockle.vercel.app/>`;
         } else {
             text = `Skyblockle #${day} in ${attempts} tries\n${GameState.shareRows.join("\n")}\n<https://skyblockle.vercel.app/>`;
@@ -82,6 +85,28 @@ export function getDayNumber() {
     const today = new Date();
     const diffTime = today - start;
     return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+}
+
+export function updateGiveUpVisibility() {
+    const btn = document.getElementById("giveUpBtn");
+    if (!btn) return;
+    
+    if (GameState.practiceActive) {
+        btn.style.display = GameState.practiceGameOver ? "none" : "inline-block";
+        return;
+    }
+
+    if (GameState.gameOver || GameState.gaveUp){
+        btn.style.display = "none"
+        return;
+    }
+
+
+    if (GameState.guessedItems.length >= 5) {
+        btn.style.display = "inline-block";
+    } else {
+        btn.style.display = "none";
+    }
 }
 
 /* ---------------- autocomplete ---------------- */

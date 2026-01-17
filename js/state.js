@@ -7,6 +7,9 @@ export const GameState = {
     shareRows: [],
     practiceActive: false,
     hplus: false,
+    gaveUp: false,
+    gameOver: false,
+    practiceGameOver: false
 };
 
 export const START_DATE = "2025-11-26";
