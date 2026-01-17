@@ -143,7 +143,7 @@ export function checkAnswer() {
             return;
         }
 
-        if(guess.toLowerCase() == "furrybutts"){
+        if(guess.toLowerCase() == "furrybutts" || guess.toLowerCase() == "furbur"){
             tempMessage("cute")
             return;
         }
