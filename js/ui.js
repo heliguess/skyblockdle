@@ -1,5 +1,5 @@
-import {GameState, daggers} from "./state.js";
-import {checkAnswer} from "./game.js";
+import { GameState, daggers } from "./state.js";
+import { checkAnswer } from "./game.js";
 
 const grid = document.getElementById("grid");
 const alertBox = document.getElementById("alert");
@@ -65,7 +65,7 @@ export function showShareButton(attempts) {
     btn.onclick = () => {
         const day = getDayNumber();
         let text = "";
-        if (GameState.gaveUp){
+        if (GameState.gaveUp) {
             text = `Skyblockle #${day}! Gave up after ${attempts} tries... \n${GameState.shareRows.join("\n")}\n<https://skyblockle.vercel.app/>`;
         } else if (attempts <= 1) {
             text = `Skyblockle #${day} first try!\n${GameState.shareRows.join("\n")}\n<https://skyblockle.vercel.app/>`;
@@ -90,13 +90,13 @@ export function getDayNumber() {
 export function updateGiveUpVisibility() {
     const btn = document.getElementById("giveUpBtn");
     if (!btn) return;
-    
+
     if (GameState.practiceActive) {
         btn.style.display = GameState.practiceGameOver ? "none" : "inline-block";
         return;
     }
 
-    if (GameState.gameOver || GameState.gaveUp){
+    if (GameState.gameOver || GameState.gaveUp) {
         btn.style.display = "none"
         return;
     }
@@ -147,9 +147,9 @@ function setupAutocomplete() {
         });
 
         const combinedMatches = allMatches.sort((a, b) => {
-                if (a.pos !== b.pos) return a.pos - b.pos;
-                return a.name.length - b.name.length;
-            }).slice(0, 10);
+            if (a.pos !== b.pos) return a.pos - b.pos;
+            return a.name.length - b.name.length;
+        }).filter((item, index, self) => GameState.guessedItems.map(i => i.name).indexOf(item.name) === -1).slice(0, 10);
 
         if (combinedMatches.length === 0) {
             suggestionsBox.style.display = "none";
