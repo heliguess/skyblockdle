@@ -599,7 +599,7 @@
       "rarity": "LEGENDARY",
       "damage": 260,
       "strength": 110,
-      "ability": [],
+      "ability": ["Right click"],
       "material": "IRON_SWORD"
     },
     {
