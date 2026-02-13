@@ -1,5 +1,8 @@
-# Skyblockle! A daily Wordle-like game of Hypixel Skyblock.
+<h1 align="center">
+  Skyblockle
+</h1>
 
+Skyblockle is a Wordle-like daily game for Hypixel Skyblock weapons.<br>
 The goal of the game is to guess the Weapon of the Day based on the stats and matches found throughout the game.<br>
 For every guess, each cell will appear as <span class="green">green</span>, <span class="yellow">yellow</span>, or <span class="red">red</span> depending on if the specific value matches.<br>
 
